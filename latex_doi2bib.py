@@ -66,7 +66,7 @@ def main():
             new_bib_entry = get_bibtex_from_doi(citation)
             if new_bib_entry is not None:
                 new_bib_entry = change_bibtex_name(new_bib_entry, citation)
-                new_bib_entry = new_bib_entry.replace("%", "/")
+                new_bib_entry = new_bib_entry.replace("%", "/").replace("amp$\mathsemicolon$", "")
                 new_entries.append(new_bib_entry)
             else:
                 print(f"doi2bib warning: No bibtex found for citation: {citation}. Is it a valid DOI url?")
