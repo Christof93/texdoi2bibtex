@@ -1,6 +1,7 @@
 import sys
 import re
-import requests
+import urllib.request
+
 
 tex_file = sys.argv[1]
 bib_file = sys.argv[2]
@@ -9,9 +10,11 @@ def get_bibtex_from_doi(doi):
     if doi.startswith("10."):
         doi = "https://doi.org/"+doi
     print(f"doi2bib: Fetching entry for {doi}...")
-    response = requests.get(doi, headers = {"Accept": "application/x-bibtex"})
-    if response.status_code == 200:
-        return response.text
+    req = urllib.request.Request(doi, headers = {"Accept": "application/x-bibtex"})
+    response = urllib.request.urlopen(req)
+
+    if response.status == 200:
+        return response.read().decode()
     else:
         return None
     
