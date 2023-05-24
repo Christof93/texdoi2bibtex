@@ -16,10 +16,7 @@ def get_bibtex_from_doi(doi):
         return None
     
 def change_bibtex_name(entry, change_to):
-    print(entry)
-    print(change_to)
     changed_name = re.sub(r'(\@.+\{)(?:.*)?(\,)', rf'\g<1>{change_to}\2', entry)
-    print(changed_name)
     return changed_name
 
 def read_bibtex_file(fn):
@@ -61,7 +58,7 @@ def main():
     bib_entries = read_bibtex_file(bib_file)
     print(f"doi2bib: Found {len(bib_entries)} entries in bibTeX file.")
     new_entries = []
-    for citation in citations[:1]:
+    for citation in citations:
         if citation not in bib_entries:
             new_bib_entry = get_bibtex_from_doi(citation)
             if new_bib_entry is not None:
