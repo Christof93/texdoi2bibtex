@@ -3,9 +3,6 @@ import re
 import urllib.request
 
 
-tex_file = sys.argv[1]
-bib_file = sys.argv[2]
-
 def get_bibtex_from_doi(doi):
     if doi.startswith("10."):
         doi = "https://doi.org/"+doi
@@ -73,6 +70,7 @@ def main():
 
     writeappend_to_bibtex_file(new_entries, bib_file)
 
-
 if __name__=="__main__":
+    tex_file = sys.argv[1]
+    bib_file = sys.argv[2]
     main()
