@@ -38,7 +38,7 @@ becomes
 	journal = {{eLife}}
 }
 
-@article{https://doi.org/10.1098/rsos.160384,
+@article{10.1098/rsos.160384,
 	doi = {10.1098/rsos.160384},
 	url = {https://doi.org/10.1098/2Frsos.160384},
 	year = 2016,
@@ -52,7 +52,7 @@ becomes
 	journal = {Royal Society Open Science}
 }
 
-@article{https://doi.org/10.1371/journal.pmed.0020124,
+@article{10.1371/journal.pmed.0020124,
 	doi = {10.1371/journal.pmed.0020124},
 	url = {https://doi.org/10.1371/2Fjournal.pmed.0020124},
 	year = 2005,
