@@ -6,7 +6,9 @@ tex_file = sys.argv[1]
 bib_file = sys.argv[2]
 
 def get_bibtex_from_doi(doi):
-    print("doi2bib: Fetching entry for {doi}...")
+    if doi.startswith("10."):
+        doi = "https://doi.org/"+doi
+    print(f"doi2bib: Fetching entry for {doi}...")
     response = requests.get(doi, headers = {"Accept": "application/x-bibtex"})
     if response.status_code == 200:
         return response.text
@@ -14,7 +16,10 @@ def get_bibtex_from_doi(doi):
         return None
     
 def change_bibtex_name(entry, change_to):
-    changed_name = re.sub(r'(\@.+\{)(?:.*)?(\,)',rf'\1{change_to}\2', entry)
+    print(entry)
+    print(change_to)
+    changed_name = re.sub(r'(\@.+\{)(?:.*)?(\,)', rf'\g<1>{change_to}\2', entry)
+    print(changed_name)
     return changed_name
 
 def read_bibtex_file(fn):
@@ -35,11 +40,12 @@ def read_latex_file(fn):
     citations = []
     with open(fn, 'r') as latex_file:
         for line in latex_file:
-            raw_cites=re.findall(r'\\cite\{(.*?)\}', line)
+            raw_cites=re.findall(r'\\cite[tp]?\*?\{(.*?)\}', line)
             for raw_cite in raw_cites:
                 for citation in raw_cite.split(','):
                     citation = citation.strip()
-                    if citation.startswith('http'):
+                    ## match the only possible doi starting with 10. and at least 4 numbers following
+                    if re.match(r'.*10\.\d{4,}(\.\d+)*\/.*', citation):
                         citations.append(citation)
     return citations
 
@@ -55,7 +61,7 @@ def main():
     bib_entries = read_bibtex_file(bib_file)
     print(f"doi2bib: Found {len(bib_entries)} entries in bibTeX file.")
     new_entries = []
-    for citation in citations:
+    for citation in citations[:1]:
         if citation not in bib_entries:
             new_bib_entry = get_bibtex_from_doi(citation)
             if new_bib_entry is not None:
