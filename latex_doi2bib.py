@@ -44,7 +44,7 @@ def read_latex_file(fn):
                     ## match the only possible doi starting with 10. and at least 4 numbers following
                     if re.match(r'.*10\.\d{4,}(\.\d+)*\/.*', citation):
                         citations.append(citation)
-    return citations
+    return set(citations)
 
 def writeappend_to_bibtex_file(entries, bibtex_fn):
     with open(bibtex_fn, 'a') as bibtex_fh:
