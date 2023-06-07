@@ -8,8 +8,10 @@ def get_bibtex_from_doi(doi):
         doi = "https://doi.org/"+doi
     print(f"doi2bib: Fetching entry for {doi}...")
     req = urllib.request.Request(doi, headers = {"Accept": "application/x-bibtex"})
-    response = urllib.request.urlopen(req)
-
+    try:
+        response = urllib.request.urlopen(req)
+    except urllib.error.HTTPError:
+        return None
     if response.status == 200:
         return response.read().decode()
     else:
