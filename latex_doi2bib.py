@@ -18,7 +18,7 @@ def get_bibtex_from_doi(doi):
         return None
     
 def change_bibtex_name(entry, change_to):
-    changed_name = re.sub(r'(\@.+\{)(?:.*)?(\,)', rf'\g<1>{change_to}\2', entry)
+    changed_name = re.sub(r'\s*(\@.*?\{)(?:.*?)\,', rf'\g<1>{change_to},', entry)
     return changed_name
 
 def read_bibtex_file(fn):
@@ -28,7 +28,7 @@ def read_bibtex_file(fn):
             for line in bibtex_file:
                 if line.strip().startswith('@'):
                     try:
-                        entries.append(re.search(r'\@.+\{(.*?)\,', line).group(1))
+                        entries.append(re.search(r'\@.*?\{(.*?)\,', line).group(1))
                     except:
                         print(f"doi2bib: Couldn't read name of entry {line}")
     except FileNotFoundError:
